@@ -63,7 +63,19 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return new List<int>(); // Placeholder
+                HashSet<int> seen = new HashSet<int>();  // Track numbers found in the array.
+                List<int> missing = new List<int>();     // Store missing numbers.
+
+                foreach (var num in nums)
+                    seen.Add(num);  // Store each unique number in the HashSet.
+
+                for (int i = 1; i <= nums.Length; i++)
+                {
+                    if (!seen.Contains(i))
+                        missing.Add(i);  // Add any missing number to the result list.
+                }
+                return missing;
+               
             }
             catch (Exception)
             {
@@ -77,7 +89,22 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return new int[0]; // Placeholder
+                List<int> even = new List<int>();  // Store even numbers.
+                List<int> odd = new List<int>();   // Store odd numbers.
+
+                // Traverse the array and distribute numbers based on their parity.
+                foreach (var num in nums)
+                {
+                    if (num % 2 == 0)
+                        even.Add(num);  // Add to even list.
+                    else
+                        odd.Add(num);   // Add to odd list.
+                }
+
+                // Concatenate even and odd lists to form the result.
+                even.AddRange(odd);
+                return even.ToArray();  // Convert to array and return.
+                
             }
             catch (Exception)
             {
@@ -91,7 +118,20 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return new int[0]; // Placeholder
+                Dictionary<int, int> numIndices = new Dictionary<int, int>();
+
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int complement = target - nums[i];  // Calculate the complement.
+
+                    if (numIndices.ContainsKey(complement))
+                        return new int[] { numIndices[complement], i };  // Return matching indices.
+
+                    if (!numIndices.ContainsKey(nums[i]))  // Avoid overwriting existing keys.
+                        numIndices[nums[i]] = i;
+                }
+                return new int[] { };  // Return an empty array if no solution found
+               
             }
             catch (Exception)
             {
@@ -105,7 +145,16 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return 0; // Placeholder
+                if (nums.Length < 3)
+                    throw new ArgumentException("Array must contain at least three numbers.");
+
+                Array.Sort(nums);  // Sort the array to easily find largest and smallest numbers.
+                int n = nums.Length;
+
+                // Compare the product of the largest three numbers with the product of the two smallest and the largest.
+                return Math.Max(nums[n - 1] * nums[n - 2] * nums[n - 3],
+                                nums[0] * nums[1] * nums[n - 1]);
+                
             }
             catch (Exception)
             {
@@ -119,7 +168,11 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return "101010"; // Placeholder
+                if (decimalNumber < 0)
+                    throw new ArgumentException("Negative numbers are not supported.");
+
+                return Convert.ToString(decimalNumber, 2);  // Convert using built-in method.
+               
             }
             catch (Exception)
             {
@@ -133,7 +186,19 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return 0; // Placeholder
+                int left = 0, right = nums.Length - 1;
+
+                while (left < right)
+                {
+                    int mid = left + (right - left) / 2;
+
+                    if (nums[mid] > nums[right])
+                        left = mid + 1;  // Minimum is on the right side.
+                    else
+                        right = mid;  // Minimum is at mid or to the left.
+                }
+                return nums[left];  // The minimum element.
+                
             }
             catch (Exception)
             {
@@ -147,7 +212,18 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return false; // Placeholder
+                if (x < 0) return false;  // Negative numbers are not palindromes.
+
+                int original = x, reversed = 0;
+
+                while (x != 0)
+                {
+                    int remainder = x % 10;
+                    reversed = reversed * 10 + remainder;
+                    x /= 10;
+                }
+                return original == reversed;  // Check if the reversed number matches the original.
+                
             }
             catch (Exception)
             {
@@ -161,7 +237,19 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return 0; // Placeholder
+                if (n < 0) throw new ArgumentException("Input must be non-negative.");
+                if (n <= 1) return n;  // Base cases.
+
+                int a = 0, b = 1;
+
+                for (int i = 2; i <= n; i++)
+                {
+                    int next = a + b;
+                    a = b;
+                    b = next;
+                }
+                return b;  // The nth Fibonacci number.
+                
             }
             catch (Exception)
             {
